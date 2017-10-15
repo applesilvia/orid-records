@@ -2,7 +2,7 @@ class OridsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @orids = current_user.orids
+    @orids = current_user.orids.paginate(:page => params[:page], :per_page => 10)
   end
 
   def new
@@ -11,14 +11,20 @@ class OridsController < ApplicationController
 
   def create
     @orid = Orid.new(orid_params)
-    @orid.user =current_user
-
+    @orid.user = current_user
     @orid.save
 
     redirect_to orids_path
   end
 
   def update
+    @orid = current_user.orids.find(params[:id])
+
+    if @orid.update(orid_params)
+      redirect_to orid_path(@orid), notice: "修改成功"
+    else
+      render :edit
+    end
   end
 
   def edit
@@ -26,10 +32,12 @@ class OridsController < ApplicationController
   end
 
   def show
+    @orid = Orid.find(params[:id])
   end
 
   def destroy
     @orid = Orid.find(params[:id])
+    @orid = current_user.orids.find(params[:id])
     @orid.destroy
 
     redirect_to orids_path
