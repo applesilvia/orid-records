@@ -2,7 +2,7 @@ class OridsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @orids = current_user.orids.paginate(:page => params[:page], :per_page => 10)
+    @orids = Orid.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   def new
@@ -12,9 +12,12 @@ class OridsController < ApplicationController
   def create
     @orid = Orid.new(orid_params)
     @orid.user = current_user
-    @orid.save
 
-    redirect_to orids_path
+    if @orid.save
+      redirect_to orids_path
+    else
+      render :new
+    end
   end
 
   def update

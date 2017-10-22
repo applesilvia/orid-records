@@ -11,8 +11,8 @@
           </button>
           <a class="navbar-brand" href="/">Orid Records</a>
       </div>
-
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
           <ul class="nav navbar-nav navbar-right">
               <% if !current_user %>
                 <li><%= link_to("註冊", new_user_registration_path) %></li>

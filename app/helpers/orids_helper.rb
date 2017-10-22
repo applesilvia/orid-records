@@ -1,2 +1,2 @@
-module Admin::OridsHelper
+module OridsHelper
 end

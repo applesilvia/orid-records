@@ -6,7 +6,9 @@ class User < ApplicationRecord
 
   has_many :orids
 
+  validates_presence_of :name
+
   def admin?
     is_admin
-  end  
+  end
 end

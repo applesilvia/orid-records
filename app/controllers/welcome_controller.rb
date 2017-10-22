@@ -1,5 +1,7 @@
 class WelcomeController < ApplicationController
+
   def index
-    flash[:notice] = "早安！ 你好！"
+    @today_orids = Orid.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    @orids = current_user.orids.order("id desc").limit(4) if current_user
   end
 end
