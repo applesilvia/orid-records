@@ -21,12 +21,32 @@
       </div>
       <div class="panel-footer">
         <% if @orid.editable_by?(current_user) %>
-          <%= link_to '編輯', edit_orid_path(orid), class: 'btn btn-sm btn-default' %>
-          <%= link_to("刪除", orid_path(orid),    class: "btn btn-sm btn-default",
+          <%= link_to '編輯', edit_orid_path(@orid), class: 'btn btn-sm btn-default' %>
+          <%= link_to("刪除", orid_path(@orid),    class: "btn btn-sm btn-default",
             method: :delete, data: { confirm: "Are you sure?" } )%>
         <% end %>
         <%= link_to '返回', orids_path, class: 'btn btn-sm btn-default' %>
+        <%= link_to 'markdown', markdown_account_orid_path, class: 'btn btn-default pull-right' %>
       </div>
     </div>
+
+    <%= simple_form_for [ @orid , Comment.new ] do |f| %>
+    <div class="comment-box">
+      <div class="pull-left comment-text-field">
+
+        <%= f.text_field :message, :label => false, class:"form-control" %>
+
+      </div>
+      <div class="submit-button">
+            <%= f.submit "發送", :class => "btn btn-grey" %>
+      </div>
+    </div>
+    <% end %>
+
+    <% @orid.comments.each do |comment| %>
+    <%= comment.message %>
+    <%= comment.user.name %>
+    <br>
+    <% end %>
   </div>
 </div>
